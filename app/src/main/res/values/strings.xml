@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Dresslap_app</string>
+    <string name="title_giacca">Giacca</string>
+    <string name="descr_giacca">giacca marrone</string>
+    <string name="id_giacca">g000</string>
+    <string name="title_camicia">Camicia</string>
+    <string name="descr_camicia">camicia celeste</string>
+    <string name="id_camicia">c000</string>
+    <string name="title_maglioncino">Maglioncino</string>
+    <string name="descr_maglioncino">maglioncino a righe</string>
+    <string name="id_maglioncino">m000</string>
+    <string-array name="titles">
+        <item>Giacca</item>
+        <item>Maglioncino</item>
+        <item>Camicia</item>
+    </string-array>
+    <string-array name="descriptions">
+        <item>giacca marrone</item>
+        <item>maglioncino righe</item>
+        <item>camicia celeste</item>
+    </string-array>
+    <string name="title_activity_gestione_richiesta">GestioneRichiestaActivity</string>
+</resources>
