@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.matteo.dresslap_app.MainActivity;
+import com.example.matteo.dresslap_app.Product;
 import com.example.matteo.dresslap_app.interfaces.TaskListener;
 
 import org.apache.http.HttpResponse;
@@ -25,11 +26,15 @@ import java.io.StringReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class GenericTask extends AsyncTask<Integer, Void, Boolean> {
 
 
-    private static final String URL_CONN = "https://raw.githubusercontent.com/dstnbrkr/DRBOperationTree/master/Example/cassette.json";
+//    private static final String URL_CONN = "https://raw.githubusercontent.com/dstnbrkr/DRBOperationTree/master/Example/cassette.json";
+    private static final String URL_CONN ="http://api.androidhive.info/contacts/";
+
+    private static final String JSON_START = "contacts";
 
     private static final String ID="id";
     private static final String ID_PRODOTTO="id_prodotto";
@@ -43,8 +48,7 @@ public class GenericTask extends AsyncTask<Integer, Void, Boolean> {
     private TaskListener<String> listener;
     private ConnectivityManager connectivityManager;
 
-    private ArrayList<HashMap<String, String>> productList;
-
+    List<Product> productList;
 
     public GenericTask(TaskListener<String> listener,ConnectivityManager connectivityManager) {
         super();
@@ -73,7 +77,7 @@ public class GenericTask extends AsyncTask<Integer, Void, Boolean> {
     protected void onPostExecute(Boolean success) {
         if(success) {
             listener.onTaskSuccess("OK");
-            
+
 
         } else {
             listener.onTaskError();
@@ -88,6 +92,7 @@ public class GenericTask extends AsyncTask<Integer, Void, Boolean> {
     }
 
     public String downloadUrl(String url) throws IOException {
+        JSONArray products;
         HttpClient httpclient = new DefaultHttpClient();
         HttpRequestBase httpRequest = null;
         HttpResponse httpResponse = null;
@@ -109,63 +114,69 @@ public class GenericTask extends AsyncTask<Integer, Void, Boolean> {
         inputStream.close();
         response = buffer.toString();
 
+
+//        try{
+//
+//            int i;
+//
+//            //Creazione JSON per il set di risultati
+//            JSONArray jsonArray = new JSONArray(response);
+//
+//            for(i=0; i<jsonArray.length(); i++){
+//
+//                //Creazione oggetto JSON per il singolo risultato
+//                JSONObject element = jsonArray.getJSONObject(i);
+//
+//
+//
+//
+//                String id = element.getString(ID);
+//                String id_prodotto = element.getString(ID_PRODOTTO);
+//                String colore = element.getString(COLORE);
+//                String taglia = element.getString(TAGLIA);
+//                String prezzo = element.getString(PREZZO);
+//                String qta = element.getString(QTA);
+//                String posizione = element.getString(POSIZIONE);
+//                String vetrina = element.getString(VETRINA);
+//
+//                HashMap<String, String> item = new HashMap<String, String>();
+//
+//                item.put(ID,id);
+//                item.put(ID_PRODOTTO,id_prodotto);
+//                item.put(COLORE,colore);
+//                item.put(TAGLIA,taglia);
+//                item.put(PREZZO,prezzo);
+//                item.put(QTA,qta);
+//                item.put(POSIZIONE,posizione);
+//                item.put(VETRINA,vetrina);
+//                productList.add(item);
+//            }
+//
+//
+//
+//        }
         try {
-            JSONObject example = new JSONObject();
-            example.put("id", "1");
-            System.out.print(example);
-        }catch (JSONException e){
 
-        }
+            productList = new ArrayList<>();
 
+            //Conversione della stringa in JSON
+            JSONObject jsonObj = new JSONObject(response);
 
+            products = jsonObj.getJSONArray(JSON_START);
 
+            for (int i = 0; i < products.length(); i++) {
+                JSONObject element = products.getJSONObject(i);
 
-        try{
-            int i;
+                String id = element.getString("id");
+                String name = element.getString("name");
 
-            //Creazione JSON per il set di risultati
-            JSONArray jsonArray = new JSONArray(response);
+                JSONObject phone = element.getJSONObject("phone");
+                String mobile = phone.getString("mobile");
 
-           /* JSONObject ex = new JSONObject()
-                    .put("id","100")
-                    .put("id_prodotto","2")
-                    .put("colore","blue")
-                    .put("taglia","M")
-                    .put("prezzo","25")
-                    .put("qta","100")
-                    .put("posizione","negozio")
-                    .put("vetrina","vetrina");
-            */
-
-            for(i=0; i<jsonArray.length(); i++){
-
-                //Creazione oggetto JSON per il singolo risultato
-                JSONObject element = jsonArray.getJSONObject(i);
-
-                String id = element.getString(ID);
-                String id_prodotto = element.getString(ID_PRODOTTO);
-                String colore = element.getString(COLORE);
-                String taglia = element.getString(TAGLIA);
-                String prezzo = element.getString(PREZZO);
-                String qta = element.getString(QTA);
-                String posizione = element.getString(POSIZIONE);
-                String vetrina = element.getString(VETRINA);
-
-                HashMap<String, String> item = new HashMap<String, String>();
-
-                item.put(ID,id);
-                item.put(ID_PRODOTTO,id_prodotto);
-                item.put(COLORE,colore);
-                item.put(TAGLIA,taglia);
-                item.put(PREZZO,prezzo);
-                item.put(QTA,qta);
-                item.put(POSIZIONE,posizione);
-                item.put(VETRINA,vetrina);
-
-                productList.add(item);
+                productList.add(new Product(id,name,mobile,"prova"));
             }
-
-        }catch (JSONException e){
+        }
+        catch (JSONException e){
             System.out.println(e);
         }
 

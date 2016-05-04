@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTaskSuccess(String... result) {
                 String res = result[0];
-                Toast.makeText(getApplicationContext(), "Connessione WiFi effettuata", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Connessione effettuata", Toast.LENGTH_SHORT).show();
             }
 
             @Override
