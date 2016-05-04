@@ -13,45 +13,107 @@
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="4dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_id_lv"
-            android:text="id"
-            android:textSize="20dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="200dp"/>
+            android:orientation="vertical"
+            android:padding="4dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_color_lv"
-            android:text="colore"
-            android:textSize="20dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="220dp"/>
+            <TextView
+                style="@style/CardView.BottomButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_camerino"
+                android:text="CAMERINO 1"
+                android:textSize="15dp"
+                android:layout_gravity="right"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_taglia_lv"
-            android:text="taglia"
-            android:textSize="20dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="240dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_prezzo_lv"
-            android:text="prezzo"
-            android:textSize="20dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="260dp"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/iv_capo"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/maglioncino" />
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/iv_capo"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/maglioncino"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv1"
+                    android:text="AlphaStudio"
+                    android:textSize="20dp"
+                    android:layout_gravity="left"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_prezzo"
+                    android:text="200,00 euro"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="right"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_id"
+                android:text="nome prodotto"
+                android:textSize="20dp"
+                android:layout_gravity="left"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv2"
+                    android:text="COLORE: "
+                    android:textSize="15dp"
+                    android:layout_gravity="left"/>
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:id="@+id/iv_colore"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/darkBlue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv3"
+                        android:text="TAGLIA: "
+                        android:textSize="15dp"
+                        android:layout_gravity="left"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_taglia"
+                        android:textSize="15dp"
+                        android:text="S" />
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="STO ARRIVANDO"
+                android:id="@+id/btn_arrivo"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/white" />
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

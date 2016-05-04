@@ -1,12 +1,16 @@
 package com.example.matteo.dresslap_app;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,27 +40,29 @@ public class MainActivity extends AppCompatActivity {
         lvProduct = (ListView)findViewById(R.id.lv_capi);
 
         mProductList = new ArrayList<>();
-        mProductList.add(new Product("m001","blu, azzurro, grigio","taglia 46","80 euro"));
-        mProductList.add(new Product("m002","verde, verde chiaro","taglia 48","80 euro"));
-        mProductList.add(new Product("m003","blu, azzurro, grigio","taglia 50","80 euro"));
 
-        adapter = new ListAdapterProduct(getApplicationContext(),mProductList);
+        mProductList.add(new Product("jeans AS","E53935","46","80 euro","CAMERINO 1"));
+        mProductList.add(new Product("scarpe AS","125688","47","120 euro","CAMERINO 1"));
+        mProductList.add(new Product("maglioncino AS","0092E6","46","175 euro","CAMERINO 2"));
+
+
+        //adapter = new ListAdapterProduct(getApplicationContext(),mProductList);
+        adapter = new ListAdapterProduct(MainActivity.this,mProductList);
+
         lvProduct.setAdapter(adapter);
 
         lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(getApplicationContext(), "Clicked product id = " + view.getTag(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this,GestioneRichiestaActivity.class);
+                Log.i("MAIN", "Eseguito");
+                Intent intent = new Intent(MainActivity.this, GestioneRichiestaActivity.class);
                 intent.putExtra(KEY_ID, mProductList.get(position).getId());
-                intent.putExtra(KEY_PREZZO,mProductList.get(position).getPrezzo());
-                intent.putExtra(KEY_COLORE,mProductList.get(position).getColore());
-                intent.putExtra(KEY_TAGLIA,mProductList.get(position).getTaglia());
+                intent.putExtra(KEY_PREZZO, mProductList.get(position).getPrezzo());
+                intent.putExtra(KEY_COLORE, mProductList.get(position).getColore());
+                intent.putExtra(KEY_TAGLIA, mProductList.get(position).getTaglia());
                 startActivity(intent);
             }
         });
-
-        //JSON : https://raw.githubusercontent.com/dstnbrkr/DRBOperationTree/master/Example/cassette.json
 
         TaskListener<String> taskListener = new TaskListener<String>() {
             @Override

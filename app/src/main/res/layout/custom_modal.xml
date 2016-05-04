@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ColoreSfondo">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Colore2">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/dresslab_dress_icon"
+            android:layout_margin="20dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_prezzo"
+            android:text="Invia messaggio al cliente"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ColoreSfondo">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv1"
+            android:text="Seleziona uno dei messaggi predefiniti dalla lista qui sotto"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            android:textColor="@color/ColoreTesto"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"/>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="132dp"
+            android:id="@+id/lv_richiesta" />
+    </LinearLayout>
+
+    <!--<LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ANNULLA"
+            android:id="@+id/btn_annulla"
+            android:layout_gravity="right"
+            android:textSize="15dp"
+            android:background="@color/ColoreSfondo"
+            android:textColor="@color/ColoreTesto"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONFERMA"
+            android:background="@color/ColoreSfondo"
+            android:textColor="@color/Colore1"
+            android:id="@+id/btn_conferma"
+            android:textSize="15dp"
+            android:layout_gravity="right" />
+    </LinearLayout>-->
+</LinearLayout>

@@ -20,4 +20,5 @@
         <item>camicia celeste</item>
     </string-array>
     <string name="title_activity_gestione_richiesta">GestioneRichiestaActivity</string>
+    <string name="title_activity_custom_modal">CustomModalActivity</string>
 </resources>

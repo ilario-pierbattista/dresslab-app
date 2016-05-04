@@ -1,15 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/ColoreSfondo"
+    android:orientation="vertical"
     tools:context="com.example.matteo.dresslap_app.MainActivity">
 
-    <ListView
+    <!-- Toolbar which replace Actionbar -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/lv_capi"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp" />
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/selection_static_actions_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            card_view:cardUseCompatPadding="true">
+
+            <ListView
+                android:id="@+id/lv_capi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerHeight="1dp"/>
+
+        </android.support.v7.widget.CardView>
+
+        <!-- Placeholder -->
+        <android.support.v7.widget.CardView
+            android:id="@+id/selection"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            card_view:cardUseCompatPadding="true">
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</LinearLayout>

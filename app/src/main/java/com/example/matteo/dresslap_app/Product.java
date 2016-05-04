@@ -5,12 +5,14 @@ public class Product {
     private String colore;
     private String taglia;
     private String prezzo;
+    private String camerino;
 
-    public Product(String id, String colore, String taglia,String prezzo){
+    public Product(String id, String colore, String taglia,String prezzo, String camerino){
         this.id=id;
         this.colore=colore;
         this.prezzo=prezzo;
         this.taglia=taglia;
+        this.camerino=camerino;
     }
 
     public String getId() {
@@ -43,5 +45,13 @@ public class Product {
 
     public void setPrezzo(String prezzo) {
         this.prezzo = prezzo;
+    }
+
+    public String getCamerino() {
+        return camerino;
+    }
+
+    public void setCamerino(String camerino) {
+        this.camerino = camerino;
     }
 }

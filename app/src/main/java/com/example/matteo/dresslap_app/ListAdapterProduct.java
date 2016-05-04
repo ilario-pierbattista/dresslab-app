@@ -1,10 +1,18 @@
 package com.example.matteo.dresslap_app;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -12,6 +20,14 @@ public class ListAdapterProduct extends BaseAdapter {
 
     private Context mContext;
     private List<Product> mProductList;
+    private static final String MAGLIONCINO = "maglioncino AS";
+    private static final String BORSA = "borsa AS";
+    private static final String GIUBBOTTO = "giubbotto AS";
+    private static final String GIUBBOTTO_DONNA = "giubbotto donna AS";
+    private static final String JEANS = "jeans AS";
+    private static final String SCARPE = "scarpe AS";
+    private static final String TSHIRT = "tshirt AS";
+
 
     public ListAdapterProduct (Context mContext, List<Product> mProductList){
         this.mContext=mContext;
@@ -36,14 +52,53 @@ public class ListAdapterProduct extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = View.inflate(mContext,R.layout.item_card,null);
-        TextView tvId = (TextView)v.findViewById(R.id.tv_id_lv);
-        TextView tvColore = (TextView)v.findViewById(R.id.tv_color_lv);
-        TextView tvTaglia = (TextView)v.findViewById(R.id.tv_taglia_lv);
-        TextView tvPrezzo = (TextView)v.findViewById(R.id.tv_prezzo_lv);
-        tvId.setText(mProductList.get(position).getId());
-        tvPrezzo.setText(mProductList.get(position).getPrezzo());
-        tvColore.setText(mProductList.get(position).getColore());
+        TextView tvNome = (TextView)v.findViewById(R.id.tv_id);
+        ImageView ivColore = (ImageView)v.findViewById(R.id.iv_colore);
+        TextView tvTaglia = (TextView)v.findViewById(R.id.tv_taglia);
+        TextView tvPrezzo = (TextView)v.findViewById(R.id.tv_prezzo);
+        ImageView ivCapo = (ImageView)v.findViewById(R.id.iv_capo);
+        TextView tvCamerino = (TextView)v.findViewById(R.id.tv_camerino);
+
+        Button btnArrivo = (Button)v.findViewById(R.id.btn_arrivo);
+        btnArrivo.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, CustomModalActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
+
+        tvNome.setText(mProductList.get(position).getId());
         tvTaglia.setText(mProductList.get(position).getTaglia());
+        tvPrezzo.setText(mProductList.get(position).getPrezzo());
+        tvCamerino.setText(mProductList.get(position).getCamerino());
+        int color = (int)Long.parseLong(mProductList.get(position).getColore(),16);
+        int r = (color >> 16) & 0xFF;
+        int g = (color >> 8) & 0xFF;
+        int b = (color >> 0) & 0xFF;
+        ivColore.setBackgroundColor(Color.rgb(r, g, b));
+        switch (mProductList.get(position).getId()){
+            case(MAGLIONCINO):
+                ivCapo.setImageResource(R.drawable.maglioncino);
+                break;
+            case(BORSA):
+                ivCapo.setImageResource(R.drawable.borsa);
+                break;
+            case(GIUBBOTTO):
+                ivCapo.setImageResource(R.drawable.giubbotto);
+                break;
+            case(GIUBBOTTO_DONNA):
+                ivCapo.setImageResource(R.drawable.giubbotto_donna);
+                break;
+            case(JEANS):
+                ivCapo.setImageResource(R.drawable.jeans);
+                break;
+            case(SCARPE):
+                ivCapo.setImageResource(R.drawable.scarpe);
+                break;
+            case(TSHIRT):
+                ivCapo.setImageResource(R.drawable.tshirt);
+                break;
+        }
         v.setTag(mProductList.get(position).getId());
         return v;
     }

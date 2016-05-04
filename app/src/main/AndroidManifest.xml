@@ -21,7 +21,12 @@
         <activity
             android:name=".GestioneRichiestaActivity"
             android:label="@string/title_activity_gestione_richiesta"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GestioneRichiestaActivity$CustomModalActivity"
+            android:label="@string/title_activity_custom_modal"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CustomModalActivity"></activity>
     </application>
 
 </manifest>
