@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.example.matteo.dresslap_app.interfaces.TaskListener;
 import com.example.matteo.dresslap_app.tasks.GenericTask;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         lvProduct = (ListView)findViewById(R.id.lv_capi);
-
-
 
         mProductList = new ArrayList<>();
         mProductList.add(new Product("m001","blu, azzurro, grigio","taglia 46","80 euro"));
@@ -85,5 +85,6 @@ public class MainActivity extends AppCompatActivity {
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         GenericTask task = new GenericTask(taskListener,connectivityManager);
         task.execute(13);
+
     }
 }

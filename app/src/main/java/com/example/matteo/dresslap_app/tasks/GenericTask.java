@@ -21,13 +21,30 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GenericTask extends AsyncTask<Integer, Void, Boolean> {
+
+
+    private static final String URL_CONN = "https://raw.githubusercontent.com/dstnbrkr/DRBOperationTree/master/Example/cassette.json";
+
+    private static final String ID="id";
+    private static final String ID_PRODOTTO="id_prodotto";
+    private static final String COLORE="colore";
+    private static final String TAGLIA="taglia";
+    private static final String PREZZO="prezzo";
+    private static final String QTA="qta";
+    private static final String POSIZIONE="posizione";
+    private static final String VETRINA="vetrina";
+
     private TaskListener<String> listener;
     private ConnectivityManager connectivityManager;
-    private static final String URL_CONN = "https://raw.githubusercontent.com/dstnbrkr/DRBOperationTree/master/Example/cassette.json";
-    private JSONArray body= null;
+
+    private ArrayList<HashMap<String, String>> productList;
+
 
     public GenericTask(TaskListener<String> listener,ConnectivityManager connectivityManager) {
         super();
@@ -56,6 +73,8 @@ public class GenericTask extends AsyncTask<Integer, Void, Boolean> {
     protected void onPostExecute(Boolean success) {
         if(success) {
             listener.onTaskSuccess("OK");
+            
+
         } else {
             listener.onTaskError();
         }
@@ -90,12 +109,65 @@ public class GenericTask extends AsyncTask<Integer, Void, Boolean> {
         inputStream.close();
         response = buffer.toString();
 
-        try{
-            JSONObject jsonObject = new JSONObject(response);
-            body=jsonObject.getJSONArray("body");
-            System.out.println(String.valueOf(body));
+        try {
+            JSONObject example = new JSONObject();
+            example.put("id", "1");
+            System.out.print(example);
+        }catch (JSONException e){
 
-        }catch (JSONException e){}
+        }
+
+
+
+
+        try{
+            int i;
+
+            //Creazione JSON per il set di risultati
+            JSONArray jsonArray = new JSONArray(response);
+
+           /* JSONObject ex = new JSONObject()
+                    .put("id","100")
+                    .put("id_prodotto","2")
+                    .put("colore","blue")
+                    .put("taglia","M")
+                    .put("prezzo","25")
+                    .put("qta","100")
+                    .put("posizione","negozio")
+                    .put("vetrina","vetrina");
+            */
+
+            for(i=0; i<jsonArray.length(); i++){
+
+                //Creazione oggetto JSON per il singolo risultato
+                JSONObject element = jsonArray.getJSONObject(i);
+
+                String id = element.getString(ID);
+                String id_prodotto = element.getString(ID_PRODOTTO);
+                String colore = element.getString(COLORE);
+                String taglia = element.getString(TAGLIA);
+                String prezzo = element.getString(PREZZO);
+                String qta = element.getString(QTA);
+                String posizione = element.getString(POSIZIONE);
+                String vetrina = element.getString(VETRINA);
+
+                HashMap<String, String> item = new HashMap<String, String>();
+
+                item.put(ID,id);
+                item.put(ID_PRODOTTO,id_prodotto);
+                item.put(COLORE,colore);
+                item.put(TAGLIA,taglia);
+                item.put(PREZZO,prezzo);
+                item.put(QTA,qta);
+                item.put(POSIZIONE,posizione);
+                item.put(VETRINA,vetrina);
+
+                productList.add(item);
+            }
+
+        }catch (JSONException e){
+            System.out.println(e);
+        }
 
         return response;
     }
