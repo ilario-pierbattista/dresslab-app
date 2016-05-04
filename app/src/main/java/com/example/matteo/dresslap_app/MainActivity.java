@@ -1,6 +1,8 @@
 package com.example.matteo.dresslap_app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         lvProduct = (ListView)findViewById(R.id.lv_capi);
 
+
+
         mProductList = new ArrayList<>();
         mProductList.add(new Product("m001","blu, azzurro, grigio","taglia 46","80 euro"));
         mProductList.add(new Product("m002","verde, verde chiaro","taglia 48","80 euro"));
@@ -54,16 +58,16 @@ public class MainActivity extends AppCompatActivity {
 
         //JSON : https://raw.githubusercontent.com/dstnbrkr/DRBOperationTree/master/Example/cassette.json
 
-        /*TaskListener<String> taskListener = new TaskListener<String>() {
+        TaskListener<String> taskListener = new TaskListener<String>() {
             @Override
             public void onTaskSuccess(String... result) {
                 String res = result[0];
-                Toast.makeText(getApplicationContext(), "NUMERO PARI: " + res, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Connessione WiFi effettuata", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onTaskError() {
-                Toast.makeText(getApplicationContext(), "NUMERO DISPARI", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Non è possibile connettersi", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -77,7 +81,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        GenericTask task = new GenericTask(taskListener);
-        task.execute(13);*/
+        Context context = getApplicationContext();
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        GenericTask task = new GenericTask(taskListener,connectivityManager);
+        task.execute(13);
     }
 }
