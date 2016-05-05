@@ -70,12 +70,12 @@ public class ListAdapterProduct extends BaseAdapter {
         tvTaglia.setText(mProductList.get(position).getTaglia());
         tvPrezzo.setText(mProductList.get(position).getPrezzo());
         tvCamerino.setText(mProductList.get(position).getCamerino());
-        int color = (int)Long.parseLong(mProductList.get(position).getColore(),16);
+        /*int color = (int)Long.parseLong(mProductList.get(position).getColore(),16);
         int r = (color >> 16) & 0xFF;
         int g = (color >> 8) & 0xFF;
-        int b = (color >> 0) & 0xFF;
-        ivColore.setBackgroundColor(Color.rgb(r, g, b));
-        String img_title ="capo_" + String.valueOf(mProductList.get(position).getId());
+        int b = (color >> 0) & 0xFF;*/
+        ivColore.setBackgroundColor(Color.parseColor(mProductList.get(position).getColore()));
+        String img_title ="capo_" + String.valueOf(mProductList.get(position).getIdArticolo());
         Context context =ivCapo.getContext();
         int id_img = context.getResources().getIdentifier(img_title,"drawable",context.getPackageName());
         ivCapo.setImageResource(id_img);

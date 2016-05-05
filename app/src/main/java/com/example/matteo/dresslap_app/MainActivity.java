@@ -103,8 +103,9 @@ public class MainActivity extends AppCompatActivity {
 
                 JSONObject articolo = task.getJSONObject("articolo");
                 String colore = articolo.getString("colore");
+                int idArticolo = articolo.getInt("id");
                 String hex = articolo.getString("coloreHex");
-                hex = hex.substring(1, hex.length() - 1);
+                // hex = hex.substring(1, hex.length() - 1);
                 String taglia = articolo.getString("taglia");
                 String prezzo = articolo.getString("prezzo");
 
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
                 String nome_prodotto = prodotto.getString("nome");
 
-                mProductList.add(new Product(id, nome_prodotto, hex, taglia, prezzo, camerino));
+                mProductList.add(new Product(id, nome_prodotto, hex, idArticolo, taglia, prezzo, camerino));
                 adapter = new ListAdapterProduct(MainActivity.this, mProductList);
                 lvProduct.setAdapter(adapter);
             }
