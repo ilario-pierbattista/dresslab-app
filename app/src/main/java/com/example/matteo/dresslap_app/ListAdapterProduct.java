@@ -75,29 +75,10 @@ public class ListAdapterProduct extends BaseAdapter {
         int g = (color >> 8) & 0xFF;
         int b = (color >> 0) & 0xFF;
         ivColore.setBackgroundColor(Color.rgb(r, g, b));
-        switch (mProductList.get(position).getNome()){
-            case(MAGLIONCINO):
-                ivCapo.setImageResource(R.drawable.maglioncino);
-                break;
-            case(BORSA):
-                ivCapo.setImageResource(R.drawable.borsa);
-                break;
-            case(GIUBBOTTO):
-                ivCapo.setImageResource(R.drawable.giubbotto);
-                break;
-            case(GIUBBOTTO_DONNA):
-                ivCapo.setImageResource(R.drawable.giubbotto_donna);
-                break;
-            case(JEANS):
-                ivCapo.setImageResource(R.drawable.jeans);
-                break;
-            case(SCARPE):
-                ivCapo.setImageResource(R.drawable.scarpe);
-                break;
-            case(TSHIRT):
-                ivCapo.setImageResource(R.drawable.tshirt);
-                break;
-        }
+        String img_title ="capo_" + String.valueOf(mProductList.get(position).getId());
+        Context context =ivCapo.getContext();
+        int id_img = context.getResources().getIdentifier(img_title,"drawable",context.getPackageName());
+        ivCapo.setImageResource(id_img);
         v.setTag(mProductList.get(position).getNome());
         return v;
     }
