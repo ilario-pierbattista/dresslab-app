@@ -1,7 +1,6 @@
 package com.example.matteo.dresslap_app;
 
-import android.app.Activity;
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -50,7 +48,7 @@ public class ListAdapterProduct extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View v = View.inflate(mContext,R.layout.item_card,null);
         TextView tvNome = (TextView)v.findViewById(R.id.tv_id);
         ImageView ivColore = (ImageView)v.findViewById(R.id.iv_colore);
@@ -63,11 +61,12 @@ public class ListAdapterProduct extends BaseAdapter {
         btnArrivo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CustomModalActivity.class);
+                intent.putExtra("task_id", ((Product) getItem(position)).getId());
                 mContext.startActivity(intent);
             }
         });
 
-        tvNome.setText(mProductList.get(position).getId());
+        tvNome.setText(mProductList.get(position).getNome());
         tvTaglia.setText(mProductList.get(position).getTaglia());
         tvPrezzo.setText(mProductList.get(position).getPrezzo());
         tvCamerino.setText(mProductList.get(position).getCamerino());
@@ -76,7 +75,7 @@ public class ListAdapterProduct extends BaseAdapter {
         int g = (color >> 8) & 0xFF;
         int b = (color >> 0) & 0xFF;
         ivColore.setBackgroundColor(Color.rgb(r, g, b));
-        switch (mProductList.get(position).getId()){
+        switch (mProductList.get(position).getNome()){
             case(MAGLIONCINO):
                 ivCapo.setImageResource(R.drawable.maglioncino);
                 break;
@@ -99,7 +98,7 @@ public class ListAdapterProduct extends BaseAdapter {
                 ivCapo.setImageResource(R.drawable.tshirt);
                 break;
         }
-        v.setTag(mProductList.get(position).getId());
+        v.setTag(mProductList.get(position).getNome());
         return v;
     }
 }

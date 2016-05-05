@@ -1,6 +1,7 @@
 package com.example.matteo.dresslap_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REPEAT_TIME = 1000;
     public static final String HOSTNAME_PRODOTTI = "http://192.168.0.2/camerino/task/list";
     private TaskListener<String> taskListener;
-    private ArrayList<Integer> taskIds;
+    public static ArrayList<Integer> taskIds;
     private GenericTask task;
     private Handler loopHandler;
     private Runnable loopRunnable;
@@ -45,11 +46,10 @@ public class MainActivity extends AppCompatActivity {
             public void onTaskSuccess(String... result) {
                 String res = result[0];
                 try {
+                    System.out.println(res);
                     JSONArray resultArray = new JSONArray(res);
 
-                    Log.i("MAIN", "Json Letto");
                     if (taskIds == null || taskIds.size() != resultArray.length()) {
-                        Log.i("MAIN", "Json Aggiornato");
                         updateCurrentTaskIds(resultArray);
                         resetList();
                         addList(res);
@@ -79,9 +79,7 @@ public class MainActivity extends AppCompatActivity {
         loopRunnable = new Runnable() {
             @Override
             public void run() {
-                Log.i("MAIN", "Hander eseguito");
                 if (task == null) {
-                    Log.i("MAIN", "Task Creato");
                     //Aggiornamento della lista
                     task = new GenericTask(taskListener, connectivityManager, MainActivity.this);
                     task.execute();
@@ -100,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject task = jsonArray.getJSONObject(i);
 
                 String camerino = task.getString("camerino");
-                //String id = task.getString("id");
+                int id = Integer.parseInt(task.getString("id"));
                 //String messaggio = task.getString("messaggio");
 
                 JSONObject articolo = task.getJSONObject("articolo");
@@ -114,9 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
                 String nome_prodotto = prodotto.getString("nome");
 
-                System.out.println(nome_prodotto + " " + hex + " " + hex + " " + taglia + " " + prezzo);
-
-                mProductList.add(new Product(nome_prodotto, hex, taglia, prezzo, camerino));
+                mProductList.add(new Product(id, nome_prodotto, hex, taglia, prezzo, camerino));
                 adapter = new ListAdapterProduct(MainActivity.this, mProductList);
                 lvProduct.setAdapter(adapter);
             }

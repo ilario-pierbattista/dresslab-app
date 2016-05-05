@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ANNULLA"
-            android:id="@+id/btn_annulla"
+            android:id="@+nome/btn_annulla"
             android:layout_gravity="right"
             android:textSize="15dp"
             android:background="@color/ColoreSfondo"
@@ -71,7 +71,7 @@
             android:text="CONFERMA"
             android:background="@color/ColoreSfondo"
             android:textColor="@color/Colore1"
-            android:id="@+id/btn_conferma"
+            android:id="@+nome/btn_conferma"
             android:textSize="15dp"
             android:layout_gravity="right" />
     </LinearLayout>-->
