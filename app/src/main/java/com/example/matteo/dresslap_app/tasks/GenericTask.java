@@ -1,14 +1,19 @@
 package com.example.matteo.dresslap_app.tasks;
 
 import android.content.Context;
+import android.content.SyncAdapterType;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.matteo.dresslap_app.ListAdapterProduct;
 import com.example.matteo.dresslap_app.MainActivity;
 import com.example.matteo.dresslap_app.Product;
+import com.example.matteo.dresslap_app.R;
 import com.example.matteo.dresslap_app.interfaces.TaskListener;
 
 import org.apache.http.HttpResponse;
@@ -22,50 +27,44 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 
-public class GenericTask extends AsyncTask<Integer, Void, Boolean> {
+public class GenericTask extends AsyncTask<Void, Void, Boolean> {
 
-
-//    private static final String URL_CONN = "https://raw.githubusercontent.com/dstnbrkr/DRBOperationTree/master/Example/cassette.json";
-    private static final String URL_CONN ="http://api.androidhive.info/contacts/";
+    private static final String URL_CONN = "http://api.androidhive.info/contacts/";
 
     private static final String JSON_START = "contacts";
 
-    private static final String ID="id";
-    private static final String ID_PRODOTTO="id_prodotto";
-    private static final String COLORE="colore";
-    private static final String TAGLIA="taglia";
-    private static final String PREZZO="prezzo";
-    private static final String QTA="qta";
-    private static final String POSIZIONE="posizione";
-    private static final String VETRINA="vetrina";
-
+    private static final String ID = "id";
+    private static final String ID_PRODOTTO = "id_prodotto";
+    private static final String COLORE = "colore";
+    private static final String TAGLIA = "taglia";
+    private static final String PREZZO = "prezzo";
+    private static final String QTA = "qta";
+    private static final String POSIZIONE = "posizione";
+    private static final String VETRINA = "vetrina";
     private TaskListener<String> listener;
     private ConnectivityManager connectivityManager;
+    private Context mContext;
+    private String jsonResponse;
 
-    List<Product> productList;
-
-    public GenericTask(TaskListener<String> listener,ConnectivityManager connectivityManager) {
+    public GenericTask(TaskListener<String> listener, ConnectivityManager connectivityManager, Context mContext) {
         super();
         this.listener = listener;
         this.connectivityManager = connectivityManager;
-
+        this.mContext = mContext;
     }
 
     @Override
-    protected Boolean doInBackground(Integer... params) {
-        int num = params[0];
+    protected Boolean doInBackground(Void... p) {
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            try{
-                downloadUrl(URL_CONN);
+            try {
+                jsonResponse = downloadUrl(MainActivity.HOSTNAME_PRODOTTI);
                 return true;
-            }catch (IOException e) {
+            } catch (IOException e) {
                 return false;
             }
         } else {
@@ -75,10 +74,8 @@ public class GenericTask extends AsyncTask<Integer, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean success) {
-        if(success) {
-            listener.onTaskSuccess("OK");
-
-
+        if (success) {
+            listener.onTaskSuccess(jsonResponse);
         } else {
             listener.onTaskError();
         }
@@ -97,89 +94,65 @@ public class GenericTask extends AsyncTask<Integer, Void, Boolean> {
         HttpRequestBase httpRequest = null;
         HttpResponse httpResponse = null;
         InputStream inputStream = null;
-        String response = "";
+        String response_prod = "";
         StringBuffer buffer = new StringBuffer();
         httpRequest = new HttpGet(url);
         httpResponse = httpclient.execute(httpRequest);
         inputStream = httpResponse.getEntity().getContent();
         int contentLength = (int) httpResponse.getEntity().getContentLength();
-        if (contentLength < 0)  {
+        if (contentLength < 0) {
             // Log.e(TAG, "The HTTP response is too long.");
         }
         byte[] data = new byte[256];
         int len = 0;
-        while (-1 != (len = inputStream.read(data)) ) {
+        while (-1 != (len = inputStream.read(data))) {
             buffer.append(new String(data, 0, len));
         }
         inputStream.close();
-        response = buffer.toString();
+        response_prod = buffer.toString();
 
 
-//        try{
-//
-//            int i;
-//
-//            //Creazione JSON per il set di risultati
-//            JSONArray jsonArray = new JSONArray(response);
-//
-//            for(i=0; i<jsonArray.length(); i++){
-//
-//                //Creazione oggetto JSON per il singolo risultato
-//                JSONObject element = jsonArray.getJSONObject(i);
-//
-//
-//
-//
-//                String id = element.getString(ID);
-//                String id_prodotto = element.getString(ID_PRODOTTO);
-//                String colore = element.getString(COLORE);
-//                String taglia = element.getString(TAGLIA);
-//                String prezzo = element.getString(PREZZO);
-//                String qta = element.getString(QTA);
-//                String posizione = element.getString(POSIZIONE);
-//                String vetrina = element.getString(VETRINA);
-//
-//                HashMap<String, String> item = new HashMap<String, String>();
-//
-//                item.put(ID,id);
-//                item.put(ID_PRODOTTO,id_prodotto);
-//                item.put(COLORE,colore);
-//                item.put(TAGLIA,taglia);
-//                item.put(PREZZO,prezzo);
-//                item.put(QTA,qta);
-//                item.put(POSIZIONE,posizione);
-//                item.put(VETRINA,vetrina);
-//                productList.add(item);
-//            }
-//
-//
-//
-//        }
-        try {
+        /*        try{
 
-            productList = new ArrayList<>();
+            int i;
 
-            //Conversione della stringa in JSON
-            JSONObject jsonObj = new JSONObject(response);
+            //Creazione JSON per il set di risultati
+            JSONArray jsonArray = new JSONArray(response_prod);
 
-            products = jsonObj.getJSONArray(JSON_START);
+            for(i=0; i<jsonArray.length(); i++){
 
-            for (int i = 0; i < products.length(); i++) {
-                JSONObject element = products.getJSONObject(i);
+                //Creazione oggetto JSON per il singolo risultato
+                JSONObject element = jsonArray.getJSONObject(i);
 
-                String id = element.getString("id");
-                String name = element.getString("name");
 
-                JSONObject phone = element.getJSONObject("phone");
-                String mobile = phone.getString("mobile");
 
-                productList.add(new Product(id,name,mobile,"prova"));
+
+                String id = element.getString(ID);
+                String id_prodotto = element.getString(ID_PRODOTTO);
+                String colore = element.getString(COLORE);
+                String taglia = element.getString(TAGLIA);
+                String prezzo = element.getString(PREZZO);
+                String qta = element.getString(QTA);
+                String posizione = element.getString(POSIZIONE);
+                String vetrina = element.getString(VETRINA);
+
+                HashMap<String, String> item = new HashMap<String, String>();
+
+                item.put(ID,id);
+                item.put(ID_PRODOTTO,id_prodotto);
+                item.put(COLORE,colore);
+                item.put(TAGLIA,taglia);
+                item.put(PREZZO,prezzo);
+                item.put(QTA,qta);
+                item.put(POSIZIONE,posizione);
+                item.put(VETRINA,vetrina);
+                productList.add(item);
             }
-        }
-        catch (JSONException e){
-            System.out.println(e);
-        }
 
-        return response;
+
+
+        }*/
+        return response_prod;
     }
+
 }

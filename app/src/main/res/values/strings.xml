@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dresslap_app</string>
+    <string name="app_name">DRESSLAB</string>
     <string name="title_giacca">Giacca</string>
     <string name="descr_giacca">giacca marrone</string>
     <string name="id_giacca">g000</string>
