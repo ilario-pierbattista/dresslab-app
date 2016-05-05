@@ -33,9 +33,9 @@ public class CustomModalActivity extends AppCompatActivity {
 
         final ListView lvRichiesta = (ListView)findViewById(R.id.lv_richiesta);
         String[] values = new String[] {
-                "CAPO TROVATO! STO ARRIVANDO",
-                "STO CERCANDO IN MAGAZZINO",
-                "TAGLIA TERMINATA :("
+                "Capo trovato! Sto arrivando",
+                "Sto cercando in magazzino",
+                "Taglia terminata :("
         };
 
         taskListener = new TaskListener<String>() {
